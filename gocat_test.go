@@ -7,7 +7,7 @@ import (
 	"testing"
 	"unsafe"
 
-	"github.com/fireeye/gocat/v6/hcargp"
+	"github.com/blurbdust4/gocat/v6/hcargp"
 
 	"github.com/stretchr/testify/require"
 )
