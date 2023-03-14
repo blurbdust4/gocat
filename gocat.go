@@ -142,7 +142,7 @@ func (hc *Hashcat) RunJob(args ...string) (err error) {
 	}
 
 	argc, argv := convertArgsToC(append([]string{hc.opts.ExecutablePath}, args...)...)
-	defer C.freeargv(argc, argv)
+	//defer C.freeargv(argc, argv)
 
 	if retval := C.user_options_getopt(&hc.wrapper.ctx, argc, argv); retval != 0 {
 		return getErrorFromCtx(hc.wrapper.ctx)
@@ -155,7 +155,7 @@ func (hc *Hashcat) RunJob(args ...string) (err error) {
 	if retval := C.hashcat_session_init(&hc.wrapper.ctx, hc.executablePath, hc.sharedPath, argc, argv, C.int(CompileTime)); retval != 0 {
 		return getErrorFromCtx(hc.wrapper.ctx)
 	}
-	defer C.hashcat_session_destroy(&hc.wrapper.ctx)
+//	defer C.hashcat_session_destroy(&hc.wrapper.ctx)
 
 	if hc.opts.PatchEventContext {
 		isPatchSuccessful, err := patchEventMutex(hc.wrapper.ctx)
@@ -285,7 +285,8 @@ func callback(id uint32, hcCtx *C.hashcat_ctx_t, wrapper unsafe.Pointer, buf uns
 		}
 	case C.EVENT_OUTERLOOP_FINISHED:
 		payload = FinalStatusPayload{
-			Status:  ctx.GetStatus(),
+			Status:  nil,
+//			Status:  ctx.GetStatus(),
 			EndedAt: time.Now().UTC(),
 		}
 	}
@@ -299,7 +300,7 @@ func callback(id uint32, hcCtx *C.hashcat_ctx_t, wrapper unsafe.Pointer, buf uns
 
 // Free releases all allocations. Call this when you're done with hashcat or exiting the application
 func (hc *Hashcat) Free() {
-	C.hashcat_destroy(&hc.wrapper.ctx)
-	C.free(unsafe.Pointer(hc.executablePath))
-	C.free(unsafe.Pointer(hc.sharedPath))
+//	C.hashcat_destroy(&hc.wrapper.ctx)
+//	C.free(unsafe.Pointer(hc.executablePath))
+//	C.free(unsafe.Pointer(hc.sharedPath))
 }
