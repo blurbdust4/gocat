@@ -142,7 +142,7 @@ func (hc *Hashcat) RunJob(args ...string) (err error) {
 	}
 
 	argc, argv := convertArgsToC(append([]string{hc.opts.ExecutablePath}, args...)...)
-	defer C.freeargv(argc, argv)
+	//defer C.freeargv(argc, argv)
 
 	if retval := C.user_options_getopt(&hc.wrapper.ctx, argc, argv); retval != 0 {
 		return getErrorFromCtx(hc.wrapper.ctx)
