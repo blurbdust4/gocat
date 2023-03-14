@@ -8,9 +8,9 @@ void event(const u32 id, hashcat_ctx_t *hashcat_ctx, const void *buf, const size
 
 void freeargv(int argc, char **argv)
 {
-  for (int i = 1; i < argc; i++)
+  /*for (int i = 0; i < argc; i++)
   {
     free(argv[i]);
-  }
+  }*/
   free(argv);
 }
